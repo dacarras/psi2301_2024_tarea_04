@@ -1,0 +1,213 @@
+---
+title: "Tarea 4"
+author: "[correo alumno]"
+output:
+  html_document
+---
+
+---
+
+# Instrucciones
+
+- La siguiente tarea contiene una serie de ejercicios para, paso a paso contruir una distribución muestral de medias, a partir de datos reales.
+
+- Vamos a emplear una copia de los datos de dotación de profesores de 2010, de Chile. Esta base de datos, contiene a todos los profesores que se encuentra trabajando en establecimientos educativos a marzo de 2010.
+
+- El archivo que contiene los datos que vamos a emplear se llama:
+
+```
+
+profesores_2010.csv
+
+```
+
+- El contenido de estos datos incluye:
+
+```
+
+#-------------------------------------------------------------------
+# contenido de los datos
+#-------------------------------------------------------------------
+
+# year <dbl> 2010, 2010, 2010, # año
+# id   <chr> "AA1029263411", " # id único por cada profesor
+# sex  <dbl> 0, 1, 0, 1, 1, 0, # sexo (1 = mujer, 0 = hombre)
+# age  <dbl> 60.82466, 61.0082 # edad en años.
+
+```
+
+- **Nota**: Los datos originales constituyen un censo de datos. Es decir que los datos `profesores_2010.csv` contienen una lista exhaustiva de todos los profesores de la población.
+
+---
+
+
+# Ejercicio 1. Cargar datos de una población..
+
+Abra estos datos, y guardelos en un objeto llamado `datos_profesores`.
+
+
+```{r}
+
+
+```
+
+
+
+# Ejercicio 2. Parámetros poblacionales.
+
+Calcule la media poblacional de edad, y la desviación estandar de la población. Genere dos objetos, uno llamado "media_poblacional", y otro llamado "desviacion_poblacional" para guardar a los parametros poblacionales respectivos. Escriba las cifras encontradas en cada caso, bajo el código, en las líneas índicadas, bajo **"Respuesta"**.
+
+
+```{r}
+
+
+```
+
+- **Respuesta**
+
+  - Media poblacional: `...`
+  - Desviación poblacional: `...`
+
+
+# Ejercicio 3. Obtener una muestra
+
+Cree una muestra de 500 casos y guárdela en un objeto llamado `muestra_n500`. Utilice su RUT sin dígito verificador como set.seed() para que la muestra sea única.
+
+```{r}
+
+
+```
+
+# Ejercicio 4. Media e intervalo de confianza
+
+Calcule el intervalo de confianza al 95% de la media de edad de la muestra generada en el ejercicio anterior. Escriba las cifras encontradas en cada caso, bajo el código, en las líneas indicadas bajo **"Respuesta"**.
+
+```{r}
+
+
+
+```
+
+- **Respuesta**
+  - Media: `#....indicar su respuesta en esta línea, y borrar este comentario.`
+  - Limite inferior: `#....indicar su respuesta en esta línea, y borrar este comentario.`
+  - Limite superior: `#....indicar su respuesta en esta línea, y borrar este comentario.`
+
+# Ejercicio 5. Crear una colección de muestras
+
+Ejecute el siguiente código para crear un conjunto de muestras. Solo necesita ejecutar el código proporcionado en este ejercicio.
+
+```{r}
+
+numero_de_replicas <- 500
+
+lista_repeticiones <- 1:numero_de_replicas
+
+coleccion_de_muestras <- purrr::map_df(lista_repeticiones, 
+  ~ dplyr::slice_sample(datos_profesores, n = 500, replace = TRUE),
+   .id = 'muestras') %>%
+dplyr::glimpse()
+
+
+```
+
+
+# Ejercicio 6. Crear una distribución muestral de medias
+
+Para crear una distribución muestral de medias, se requiere estimar una media por cada muestra generada en el ejercicio anterior. 
+
+Empleando a `coleccion_de_muestras`, calcule las medias de cada muestra, y guarde esta tabla en un objeto llamado `distribucion_de_medias`. Una vez creada esta distribución de medias, conteste la siguiente pregunta. **¿Cuántas medias posee esta distribución de medias?**.
+
+Indique su respuesta, bajo el código empleado, en las líneas indicadas bajo **"Respuesta"**.
+
+```{r}
+
+
+
+```
+
+- **Respuesta**
+  - Cantidad de medias: `#....indicar su respuesta en esta línea, y borrar este comentario.`
+
+
+# Ejercicio 7. Cuál es media y desviación estandar de la distribución muestral
+
+Calcule la media y la desviación estándar de la distribución muestral de medias. Anote los resultados debajo del código, en las líneas indicadas, bajo **"Respuesta"**.
+
+```{r}
+
+
+
+```
+
+- **Respuesta**
+  - Media: `#....indicar su respuesta en esta línea, y borrar este comentario.`
+  - Desviación estandar: `#....indicar su respuesta en esta línea, y borrar este comentario.`
+
+
+# Ejercicio 8. Cuál es el error estandar de la distribucion muestral generada
+
+Calcule el error estándar de la distribución muestral. Emplee la ecuación que hace uso de la desviación de la población (desviación estandar de la población dividido por la raíz cuadrada del tamaño de las muestras generadas). Anote los resultados debajo del código, en las líneas indicadas, bajo **"Respuesta"**.
+
+```{r}
+
+
+
+```
+
+
+- **Respuesta**
+  - Error estándar: `#....indicar su respuesta en esta línea, y borrar este comentario.`
+
+
+# Ejercicio 9. Calcule el margen de error
+
+Calcule el margen de error de la media, asumiendo un Z crítico de 1.96. Escriba el resultado encontrado, escribiendo la cifra resultante, bajo **Respuesta**.
+
+```{r}
+
+
+```
+
+
+- **Respuesta**
+  - Margen de error: `#....indicar su respuesta en esta línea, y borrar este comentario.`
+
+# Ejercicio 10. Calcule los intervalos de confianza al 95%
+
+Genere una nueva tabla de datos llamada `medias_con_ci`, empleando a `distribucion_de_medias`. En esta nueva tabla de datos incluya a los intervalos de confianza de 95% empleando el margen de error del ejercicio 9. Al limite inferior, llamelo `ll`, y al límite superior, llamelo `ul`.
+
+
+```{r}
+
+
+```
+
+
+# Ejercicio 11. Porcentaje de CI de medias que contiene a la media poblacional
+
+Empleando la tabla generada anteriormente, `medias_con_ci`, clasifique todos los intervalos según estos contengan a la media poblacional. Genere una variable *dummy* o una variable texto, que represente a esta clasificación. Luego, calcule la cantidad de intervalos de medias que contiene al parámetro poblacional, la media de la poblacional. Describa los resultados encontrados.
+
+```{r}
+
+
+```
+
+- **Respuesta**
+  - `#....indicar su respuesta en esta línea, y borrar este comentario.`
+
+
+# Ejercicio 12. Verificar que una muestra contiene a la media de la población.
+
+Genere una muestra de 20 casos. Calcula media e intervalo de confianza de esta muestra.
+Indique si esta muestra generada contieno o no a la media poblacional observada (**Sí**/**No**).
+
+```{r}
+
+
+```
+
+
+- **Respuesta**
+  - `#....indicar su respuesta en esta línea, y borrar este comentario.`
+
